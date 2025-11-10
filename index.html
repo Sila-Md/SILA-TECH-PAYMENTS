@@ -4,9 +4,420 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SILA TECH PAYMENT</title>
-    <link rel="stylesheet" href="styles.css">
     <script src="https://checkout.flutterwave.com/v3.js"></script>
-    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=USD"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #1a237e;
+            --dark-blue: #000051;
+            --accent-blue: #534bae;
+            --light-blue: #e8eaf6;
+            --white: #ffffff;
+            --black: #000000;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--black);
+            background: linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%);
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: linear-gradient(90deg, var(--dark-blue) 0%, var(--primary-blue) 100%);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .nav-logo h2 {
+            color: var(--white);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-blue);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            margin-top: 80px;
+            position: relative;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            animation: slideInLeft 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--dark-blue);
+            margin-bottom: 2rem;
+            animation: slideInLeft 1s ease-out 0.2s both;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            color: var(--white);
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: slideInLeft 1s ease-out 0.4s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(26, 35, 126, 0.3);
+        }
+
+        .hero-animation {
+            flex: 1;
+            position: relative;
+            height: 400px;
+        }
+
+        .floating-card, .floating-coin, .floating-phone {
+            position: absolute;
+            font-size: 4rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .floating-card {
+            top: 20%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+
+        .floating-coin {
+            top: 50%;
+            left: 60%;
+            animation-delay: 1s;
+        }
+
+        .floating-phone {
+            top: 70%;
+            left: 30%;
+            animation-delay: 2s;
+        }
+
+        /* Payment Section */
+        .payment-section {
+            padding: 5rem 0;
+            background: var(--white);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .payment-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 2px solid var(--light-blue);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: var(--dark-blue);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--light-blue);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+        }
+
+        .payment-methods {
+            margin: 2rem 0;
+        }
+
+        .payment-methods h3 {
+            margin-bottom: 1rem;
+            color: var(--dark-blue);
+        }
+
+        .method-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .method-card {
+            background: var(--light-blue);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .method-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-blue);
+            box-shadow: 0 5px 15px rgba(26, 35, 126, 0.2);
+        }
+
+        .method-card.selected {
+            background: var(--primary-blue);
+            color: var(--white);
+            border-color: var(--dark-blue);
+        }
+
+        .method-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .pay-button {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            color: var(--white);
+            border: none;
+            padding: 1rem;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pay-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 35, 126, 0.3);
+        }
+
+        .pay-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Services Section */
+        .services-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-blue);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            color: var(--dark-blue);
+            margin-bottom: 1rem;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 5rem 0;
+            background: var(--white);
+        }
+
+        .contact-info {
+            text-align: center;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .contact-item {
+            background: var(--light-blue);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(90deg, var(--dark-blue) 0%, var(--primary-blue) 100%);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            color: var(--white);
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--light-blue);
+            border-top: 5px solid var(--primary-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem 1rem;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .nav-menu {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .method-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-animation {
+                height: 200px;
+                margin-top: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -144,7 +555,7 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 SILA TECH PAYMENT. All rights reserved.</p>
+            <p>&copy; 2024 SILA TECH PAYMENT. All rights reserved.</p>
         </div>
     </footer>
 
@@ -154,7 +565,282 @@
         <p>Processing your payment...</p>
     </div>
 
-    <script src="script.js"></script>
-    <script src="payment-handler.js"></script>
+    <script>
+        // Global variables
+        let selectedMethod = null;
+        const developerPhone = '255612491554';
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('SILA TECH PAYMENT initialized');
+            // Add smooth scrolling for navigation links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    if (targetSection) {
+                        targetSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        });
+
+        // Scroll to payment section
+        function scrollToPayment() {
+            document.getElementById('payment').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Select payment method
+        function selectMethod(method) {
+            selectedMethod = method;
+            
+            // Remove selected class from all methods
+            document.querySelectorAll('.method-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked method
+            event.currentTarget.classList.add('selected');
+            
+            // Update pay button text
+            const payButton = document.getElementById('payButton');
+            payButton.textContent = `Pay with ${getMethodName(method)}`;
+        }
+
+        // Get payment method display name
+        function getMethodName(method) {
+            const methods = {
+                'mpesa': 'M-Pesa',
+                'flutterwave': 'Flutterwave',
+                'paypal': 'PayPal'
+            };
+            return methods[method] || 'Payment Method';
+        }
+
+        // Validate form
+        function validateForm() {
+            const amount = document.getElementById('amount').value;
+            const currency = document.getElementById('currency').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            
+            if (!amount || amount <= 0) {
+                alert('Please enter a valid amount');
+                return false;
+            }
+            
+            if (!email || !isValidEmail(email)) {
+                alert('Please enter a valid email address');
+                return false;
+            }
+            
+            if (!phone) {
+                alert('Please enter your phone number');
+                return false;
+            }
+            
+            if (!selectedMethod) {
+                alert('Please select a payment method');
+                return false;
+            }
+            
+            return true;
+        }
+
+        // Email validation
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Show loading spinner
+        function showLoading() {
+            document.getElementById('loading').style.display = 'flex';
+        }
+
+        // Hide loading spinner
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        // Process payment based on selected method
+        async function processPayment() {
+            if (!validateForm()) {
+                return;
+            }
+            
+            const paymentData = {
+                amount: document.getElementById('amount').value,
+                currency: document.getElementById('currency').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                method: selectedMethod
+            };
+            
+            showLoading();
+            
+            try {
+                switch (selectedMethod) {
+                    case 'mpesa':
+                        await processMpesaPayment(paymentData);
+                        break;
+                    case 'flutterwave':
+                        await processFlutterwavePayment(paymentData);
+                        break;
+                    case 'paypal':
+                        await processPaypalPayment(paymentData);
+                        break;
+                    default:
+                        throw new Error('Unknown payment method');
+                }
+            } catch (error) {
+                hideLoading();
+                alert('Payment failed: ' + error.message);
+                console.error('Payment error:', error);
+            }
+        }
+
+        // Simulate payment processing
+        async function processMpesaPayment(data) {
+            // Simulate API call delay
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            console.log('Processing M-Pesa payment:', data);
+            
+            hideLoading();
+            alert('M-Pesa payment initiated! Check your phone to complete the payment.');
+            
+            // Simulate successful payment
+            simulateSuccessfulPayment(data);
+        }
+
+        async function processFlutterwavePayment(data) {
+            console.log('Processing Flutterwave payment:', data);
+            
+            // For demo purposes - in real implementation, use Flutterwave SDK
+            hideLoading();
+            alert('Redirecting to Flutterwave payment gateway...');
+            
+            // Simulate successful payment
+            simulateSuccessfulPayment(data);
+        }
+
+        async function processPaypalPayment(data) {
+            console.log('Processing PayPal payment:', data);
+            
+            // For demo purposes - in real implementation, use PayPal SDK
+            hideLoading();
+            alert('Redirecting to PayPal...');
+            
+            // Simulate successful payment
+            simulateSuccessfulPayment(data);
+        }
+
+        // Simulate successful payment
+        function simulateSuccessfulPayment(data) {
+            console.log('Payment completed successfully:', data);
+            
+            // Show success message
+            const successMessage = `
+                Payment Successful!
+                
+                Amount: ${data.amount} ${data.currency}
+                Method: ${getMethodName(data.method)}
+                Email: ${data.email}
+                Phone: ${data.phone}
+                
+                Thank you for your payment!
+                
+                Developer Contact: +${developerPhone}
+            `;
+            
+            setTimeout(() => {
+                if (confirm(successMessage + '\n\nWould you like to make another payment?')) {
+                    // Reset form
+                    document.getElementById('amount').value = '';
+                    document.getElementById('email').value = '';
+                    document.getElementById('phone').value = '';
+                    selectedMethod = null;
+                    document.querySelectorAll('.method-card').forEach(card => {
+                        card.classList.remove('selected');
+                    });
+                    document.getElementById('payButton').textContent = 'Proceed to Payment';
+                }
+            }, 1000);
+        }
+
+        // Utility function to format currency
+        function formatCurrency(amount, currency) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: currency
+            }).format(amount);
+        }
+
+        // Add some interactive features
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add input animations
+            const inputs = document.querySelectorAll('input, select');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.classList.add('focused');
+                });
+                
+                input.addEventListener('blur', function() {
+                    if (!this.value) {
+                        this.parentElement.classList.remove('focused');
+                    }
+                });
+            });
+        });
+
+        // Payment Handler Classes
+        class MpesaPaymentHandler {
+            constructor() {
+                this.baseUrl = 'https://sandbox.safaricom.co.ke';
+                this.consumerKey = 'YOUR_MPESA_CONSUMER_KEY';
+                this.consumerSecret = 'YOUR_MPESA_CONSUMER_SECRET';
+            }
+
+            async getAccessToken() {
+                try {
+                    const auth = btoa(`${this.consumerKey}:${this.consumerSecret}`);
+                    const response = await fetch(`${this.baseUrl}/oauth/v1/generate?grant_type=client_credentials`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Basic ${auth}`
+                        }
+                    });
+                    
+                    const data = await response.json();
+                    return data.access_token;
+                } catch (error) {
+                    console.error('Error getting M-Pesa access token:', error);
+                    throw error;
+                }
+            }
+        }
+
+        class FlutterwavePaymentHandler {
+            constructor() {
+                this.publicKey = 'YOUR_FLUTTERWAVE_PUBLIC_KEY';
+                this.secretKey = 'YOUR_FLUTTERWAVE_SECRET_KEY';
+            }
+        }
+
+        class PayPalPaymentHandler {
+            constructor() {
+                this.clientId = 'YOUR_PAYPAL_CLIENT_ID';
+            }
+        }
+
+        // Make handlers available globally
+        window.paymentHandlers = {
+            mpesa: new MpesaPaymentHandler(),
+            flutterwave: new FlutterwavePaymentHandler(),
+            paypal: new PayPalPaymentHandler()
+        };
+    </script>
 </body>
 </html>
