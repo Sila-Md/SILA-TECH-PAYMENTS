@@ -89,7 +89,7 @@ class FlutterwavePaymentHandler {
                 customizations: {
                     title: 'SILA TECH PAYMENT',
                     description: 'Payment for services',
-                    logo: 'https://your-logo-url.com/logo.png'
+                    logo: 'https://files.catbox.moe/jwmx1j.jpg'
                 },
                 callback: function(response) {
                     resolve(response);
@@ -105,7 +105,7 @@ class FlutterwavePaymentHandler {
 // PayPal API Integration
 class PayPalPaymentHandler {
     constructor() {
-        this.clientId = 'YOUR_PAYPAL_CLIENT_ID'; // Replace with your client ID
+        this.clientId = 'Aas2sjGi565STFHuB8Yik4o7wbu9swzzwa8TKAka8s4LvOnfiVwQpTVrmSgC5-2JS-f8CXfiG8ygo46g'; // Replace with your client ID
     }
 
     async initiatePayment(paymentData) {
