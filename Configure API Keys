@@ -1,0 +1,10 @@
+// M-Pesa
+this.consumerKey = 'YOUR_ACTUAL_MPESA_CONSUMER_KEY';
+this.consumerSecret = 'YOUR_ACTUAL_MPESA_CONSUMER_SECRET';
+
+// Flutterwave
+this.publicKey = 'YOUR_ACTUAL_FLUTTERWAVE_PUBLIC_KEY';
+this.secretKey = 'YOUR_ACTUAL_FLUTTERWAVE_SECRET_KEY';
+
+// PayPal
+this.clientId = 'YOUR_ACTUAL_PAYPAL_CLIENT_ID';
