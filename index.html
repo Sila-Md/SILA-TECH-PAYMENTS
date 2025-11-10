@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SILA TECH PAYMENT</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://checkout.flutterwave.com/v3.js"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=USD"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>SILA TECH PAYMENT</h2>
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#payment" class="nav-link">Make Payment</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Secure Global Payments</h1>
+            <p class="hero-subtitle">Accept payments from anywhere in the world with multiple payment methods</p>
+            <button class="cta-button" onclick="scrollToPayment()">Make Payment Now</button>
+        </div>
+        <div class="hero-animation">
+            <div class="floating-card">💳</div>
+            <div class="floating-coin">💰</div>
+            <div class="floating-phone">📱</div>
+        </div>
+    </section>
+
+    <!-- Payment Section -->
+    <section id="payment" class="payment-section">
+        <div class="container">
+            <h2 class="section-title">Make a Payment</h2>
+            <div class="payment-form">
+                <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <input type="number" id="amount" placeholder="Enter amount" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="currency">Currency</label>
+                    <select id="currency" required>
+                        <option value="TZS">TZS - Tanzanian Shilling</option>
+                        <option value="USD">USD - US Dollar</option>
+                        <option value="EUR">EUR - Euro</option>
+                        <option value="GBP">GBP - British Pound</option>
+                        <option value="KES">KES - Kenyan Shilling</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" placeholder="Enter your phone number" required>
+                </div>
+
+                <div class="payment-methods">
+                    <h3>Choose Payment Method</h3>
+                    <div class="method-grid">
+                        <div class="method-card" onclick="selectMethod('mpesa')">
+                            <div class="method-icon">📱</div>
+                            <h4>M-Pesa</h4>
+                            <p>Pay with M-Pesa Tanzania</p>
+                        </div>
+                        <div class="method-card" onclick="selectMethod('flutterwave')">
+                            <div class="method-icon">🌍</div>
+                            <h4>Flutterwave</h4>
+                            <p>Global payments</p>
+                        </div>
+                        <div class="method-card" onclick="selectMethod('paypal')">
+                            <div class="method-icon">🔵</div>
+                            <h4>PayPal</h4>
+                            <p>International payments</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="payButton" class="pay-button" onclick="processPayment()">
+                    Proceed to Payment
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services-section">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">💼</div>
+                    <h3>Business Payments</h3>
+                    <p>Accept payments for your business globally</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔄</div>
+                    <h3>Money Transfers</h3>
+                    <p>Send and receive money worldwide</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔒</div>
+                    <h3>Secure Transactions</h3>
+                    <p>Bank-level security for all payments</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🌐</div>
+                    <h3>Multi-Currency</h3>
+                    <p>Support for multiple currencies</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Contact Developer</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <strong>Phone:</strong> +255 612 491 554
+                </div>
+                <div class="contact-item">
+                    <strong>Email:</strong> developer@sila-tech.com
+                </div>
+                <div class="contact-item">
+                    <strong>Support:</strong> 24/7 Available
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 SILA TECH PAYMENT. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Loading Spinner -->
+    <div id="loading" class="loading-spinner" style="display: none;">
+        <div class="spinner"></div>
+        <p>Processing your payment...</p>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="payment-handler.js"></script>
+</body>
+</html>
